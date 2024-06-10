@@ -1,4 +1,5 @@
 streamlit
 transformers
-google-cloud-speech
-google-cloud-texttospeech
+torch
+datasets
+TTS
