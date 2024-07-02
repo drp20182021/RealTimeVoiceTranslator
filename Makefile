@@ -1,14 +1,28 @@
-# Install project dependencies from requirements.txt
+PYTHON = python
+PIP = pip
+FD_DIR = frontend
+TEST_DIR = tests
+
 install:
-	pip install -r requirements.txt
+	@$(PIP) install -r requirements.txt
+	@$(PYTHON) -m unidic download
 
-# Remove temporary and cache files
 clean:
-	find . -type f -name "*.pyc" -delete
-	find . -type d -name "__pycache__" -delete
-	rm -rf .mypy_cache
-	rm -rf .pytest_cache
+	@find . -type d -name "__pycache__" -exec rm -rf {} +
+	@find . -name "*.pyc" -delete
+	@find . -name "*.pyo" -delete
 
-# Run unit tests
-test:
-	python -m unittest discover -s tests
+run_app:
+	streamlit run $(FD_DIR)/main.py
+
+test_config:
+	@$(PYTHON) $(TEST_DIR)/test_config.py
+
+test_transcribe:
+	@$(PYTHON) $(TEST_DIR)/test_transcribe.py
+
+test_translate:
+	@$(PYTHON) $(TEST_DIR)/test_translate.py
+
+test_synthesize:
+	@$(PYTHON) $(TEST_DIR)/test_synthesize.py
