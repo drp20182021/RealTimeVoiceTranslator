@@ -1,5 +1,12 @@
 streamlit
 transformers
 torch
-datasets
-TTS
+librosa
+streamlit-audiorec
+pyaudio
+sentencepiece
+sacremoses
+git+https://github.com/collabora/WhisperSpeech.git
+torchaudio
+webdataset
+ipython
