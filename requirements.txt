@@ -2,11 +2,7 @@ streamlit
 transformers
 torch
 librosa
-streamlit-audiorec
-pyaudio
 sentencepiece
-sacremoses
-git+https://github.com/collabora/WhisperSpeech.git
-torchaudio
-webdataset
+streamlit-audiorec
 ipython
+TTS

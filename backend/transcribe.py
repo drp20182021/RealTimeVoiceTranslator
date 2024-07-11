@@ -1,4 +1,4 @@
-from transformers import pipeline, WhisperForConditionalGeneration, WhisperProcessor
+from transformers import WhisperForConditionalGeneration, WhisperProcessor
 import torch
 
 
