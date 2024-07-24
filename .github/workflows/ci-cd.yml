@@ -24,10 +24,11 @@ jobs:
         aws-region: eu-north-1
 
     - name: Log in to Amazon ECR
-      run: |
-        aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 654654473330.dkr.ecr.eu-north-1.amazonaws.com
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push image to Amazon ECR
+      id: build-image
       run: |
         ECR_REGISTRY=654654473330.dkr.ecr.eu-north-1.amazonaws.com
         ECR_REPOSITORY=realtime-voice-translator
@@ -37,7 +38,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.3
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
