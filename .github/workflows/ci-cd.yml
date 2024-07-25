@@ -44,9 +44,24 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
+          # Install AWS CLI
+          if ! command -v aws &> /dev/null
+          then
+            sudo apt-get update
+            sudo apt-get install -y awscli
+          fi
+
+          # Clear Docker system to free up space
+          sudo docker system prune -a -f
+          sudo rm -rf /var/lib/apt/lists/*
+          sudo apt-get clean
+          sudo rm -rf /tmp/*
+
+          # ECR and Docker operations
           ECR_REGISTRY=654654473330.dkr.ecr.eu-north-1.amazonaws.com
           ECR_REPOSITORY=realtime-voice-translator
           IMAGE_TAG=latest
+
           aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker stop $(docker ps -a -q --filter ancestor=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --format="{{.ID}}") || true
